@@ -44,6 +44,11 @@ class Beer
      */
     private $country;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $beerId;
+
     public function getId()
     {
         return $this->id;
@@ -105,6 +110,18 @@ class Beer
     public function setCountry(?Country $country): self
     {
         $this->country = $country;
+
+        return $this;
+    }
+
+    public function getBeerId(): ?int
+    {
+        return $this->beerId;
+    }
+
+    public function setBeerId(int $beerId): self
+    {
+        $this->beerId = $beerId;
 
         return $this;
     }
