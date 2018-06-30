@@ -49,6 +49,11 @@ class Beer
      */
     private $beerId;
 
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $imageURL;
+
     public function getId()
     {
         return $this->id;
@@ -122,6 +127,18 @@ class Beer
     public function setBeerId(int $beerId): self
     {
         $this->beerId = $beerId;
+
+        return $this;
+    }
+
+    public function getImageURL(): ?string
+    {
+        return $this->imageURL;
+    }
+
+    public function setImageURL(string $imageURL): self
+    {
+        $this->imageURL = $imageURL;
 
         return $this;
     }
