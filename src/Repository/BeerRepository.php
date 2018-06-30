@@ -19,32 +19,34 @@ class BeerRepository extends ServiceEntityRepository
         parent::__construct($registry, Beer::class);
     }
 
-//    /**
-//     * @return Beer[] Returns an array of Beer objects
-//     */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('b.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+    /**
+     * @return Beer[] Returns an array of Beer objects
+     */
 
-    /*
-    public function findOneBySomeField($value): ?Beer
+    public function findAllFilteredAndPaginated($findBy=array(), $limit, $offset)
     {
-        return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $qb = $this->createQueryBuilder('b');
+
+        foreach ($findBy as $field => $value) {
+            if($field=="pricePerLitre"){
+                $qb->andWhere('b.pricePerLitre BETWEEN :min AND :max')
+                    ->setParameter('min', $value['min'])
+                    ->setParameter('max', $value['max']);
+            }
+            else{
+                $qb->andWhere(sprintf('b.%s = :%s', $field, $field))
+                    ->setParameter($field, $value);
+            }
+
+        }
+
+        $qb ->setFirstResult($offset)
+            ->setMaxResults($limit);
+
+        $query = $qb->getQuery();
+
+        return $query->getResult();
     }
-    */
+
+
 }
