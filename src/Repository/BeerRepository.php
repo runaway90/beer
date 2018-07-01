@@ -33,6 +33,13 @@ class BeerRepository extends ServiceEntityRepository
                     ->setParameter('min', $value['min'])
                     ->setParameter('max', $value['max']);
             }
+            elseif($field=="name"){
+                $compareValue = $value;
+                $compareValue = str_replace('*', '%', $compareValue);
+                $compareValue = str_replace('?', '_', $compareValue);
+                $qb->andWhere(sprintf('b.%s LIKE :%s', $field, $field))
+                    ->setParameter($field, $compareValue);
+            }
             else{
                 $qb->andWhere(sprintf('b.%s = :%s', $field, $field))
                     ->setParameter($field, $value);
