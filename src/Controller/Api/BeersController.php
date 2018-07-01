@@ -46,8 +46,8 @@ class BeersController extends Controller
         if($price){
             $prices = explode(',', $price);
 
-            $findByAttr['pricePerLitre']['min'] =$prices[0];
-            $findByAttr['pricePerLitre']['max'] =$prices[1];
+            $findByAttr['pricePerLitre']['min'] =floatval($prices[0])?floatval($prices[0]):-1;
+            $findByAttr['pricePerLitre']['max'] =floatval($prices[1])?floatval($prices[1]):-1;
 
         }
         if($country){
