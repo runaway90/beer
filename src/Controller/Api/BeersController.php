@@ -85,7 +85,8 @@ class BeersController extends Controller
 
         foreach ($beers as $beer){
 
-            $arrayBeer = [  'name' => $beer->getName(),
+            $arrayBeer = [  'id' => $beer->getBeerId(),
+                            'name' => $beer->getName(),
                             'brewer_id' => $beer->getBrewer()->getId(),
                             'brewer' => $beer->getBrewer()->getName(),
                             'country' => $beer->getCountry()->getName(),
@@ -119,7 +120,8 @@ class BeersController extends Controller
 
         if ($beer){
 
-            $arrayBeer = [  "name" => $beer->getName(),
+            $arrayBeer = [  'id' => $beer->getBeerId(),
+                            'name' => $beer->getName(),
                             'brewer_id' => $beer->getBrewer()->getId(),
                             'brewer' => $beer->getBrewer()->getName(),
                             'country' => $beer->getCountry()->getName(),
