@@ -99,7 +99,7 @@ class BeersController extends Controller
         // Encoding $arrayBeers to JSON
         $jsonBeers = json_encode($arrayBeers);
 
-        return new Response($jsonBeers, 200, ['Content-Type'=>'application/json','Accept'=>'application/json']);
+        return new Response($jsonBeers, 200, ['Content-Type'=>'application/json','Accept'=>'application/json', 'Access-Control-Allow-Origin'=>'*']);
 
     }
 
@@ -127,7 +127,7 @@ class BeersController extends Controller
                             'price' => $beer->getPricePerLitre()];
 
             $jsonBeer = json_encode($arrayBeer);
-            return new Response($jsonBeer, 200, ['Content-Type'=>'application/json','Accept'=>'application/json']);
+            return new Response($jsonBeer, 200, ['Content-Type'=>'application/json','Accept'=>'application/json', 'Access-Control-Allow-Origin'=>'*']);
         }
         else{
             throw new NotFoundHttpException("Beer not found");
