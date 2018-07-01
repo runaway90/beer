@@ -118,7 +118,8 @@ class BeersController extends Controller
                             'brewer' => $beer->getBrewer()->getName(),
                             'country' => $beer->getCountry()->getName(),
                             'type' => $beer->getType()->getName(),
-                            'price' => $beer->getPricePerLitre()];
+                            'price' => $beer->getPricePerLitre(),
+                            'imageUrl' => $beer->getImageURL()];
 
             $jsonBeer = json_encode($arrayBeer);
             return new Response($jsonBeer, 200, ['Content-Type'=>'application/json','Accept'=>'application/json', 'Access-Control-Allow-Origin'=>'*']);
