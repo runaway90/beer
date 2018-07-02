@@ -2,10 +2,13 @@
 
 App that imports beer data from remote API (http://ontariobeerapi.ca/) and also is a REST API.
 
+Made using Symfony 4.1  
+\
 Requires PHP 7.1
 
-## Getting Started
 
+## Getting Started
+Download project from GitHub.\
 To install all necessary packages simply go to project directory and run
 
 ```
