@@ -36,6 +36,6 @@ class BrewersController extends Controller
         // Encoding $arrayBrewers to JSON
         $jsonBrewers = json_encode($arrayBrewers);
 
-        return new Response($jsonBrewers, 200, ['Content-Type'=>'application/json','Accept'=>'application/json']);
+        return new Response($jsonBrewers, 200, ['Content-Type'=>'application/json','Accept'=>'application/json', 'Access-Control-Allow-Origin'=>'*']);
     }
 }

@@ -46,16 +46,8 @@ class BeersController extends Controller
         if($price){
             $prices = explode(',', $price);
 
-            if(count($prices) >= 2){
-                $min = min($prices);
-                $max = max($prices);
-            }
-            elseif (count($prices) == 1){
-                $min = $prices[0];
-                $max = $prices[0];
-            }
-            $findByAttr['pricePerLitre']['min'] =$min;
-            $findByAttr['pricePerLitre']['max'] =$max;
+            $findByAttr['pricePerLitre']['min'] =floatval($prices[0])?floatval($prices[0]):-1;
+            $findByAttr['pricePerLitre']['max'] =floatval($prices[1])?floatval($prices[1]):-1;
 
         }
         if($country){
@@ -85,7 +77,8 @@ class BeersController extends Controller
 
         foreach ($beers as $beer){
 
-            $arrayBeer = [  'name' => $beer->getName(),
+            $arrayBeer = [  'id' => $beer->getBeerId(),
+                            'name' => $beer->getName(),
                             'brewer_id' => $beer->getBrewer()->getId(),
                             'brewer' => $beer->getBrewer()->getName(),
                             'country' => $beer->getCountry()->getName(),
@@ -99,7 +92,7 @@ class BeersController extends Controller
         // Encoding $arrayBeers to JSON
         $jsonBeers = json_encode($arrayBeers);
 
-        return new Response($jsonBeers, 200, ['Content-Type'=>'application/json','Accept'=>'application/json']);
+        return new Response($jsonBeers, 200, ['Content-Type'=>'application/json','Accept'=>'application/json', 'Access-Control-Allow-Origin'=>'*']);
 
     }
 
@@ -119,15 +112,17 @@ class BeersController extends Controller
 
         if ($beer){
 
-            $arrayBeer = [  "name" => $beer->getName(),
+            $arrayBeer = [  'id' => $beer->getBeerId(),
+                            'name' => $beer->getName(),
                             'brewer_id' => $beer->getBrewer()->getId(),
                             'brewer' => $beer->getBrewer()->getName(),
                             'country' => $beer->getCountry()->getName(),
                             'type' => $beer->getType()->getName(),
-                            'price' => $beer->getPricePerLitre()];
+                            'price' => $beer->getPricePerLitre(),
+                            'imageUrl' => $beer->getImageURL()];
 
             $jsonBeer = json_encode($arrayBeer);
-            return new Response($jsonBeer, 200, ['Content-Type'=>'application/json','Accept'=>'application/json']);
+            return new Response($jsonBeer, 200, ['Content-Type'=>'application/json','Accept'=>'application/json', 'Access-Control-Allow-Origin'=>'*']);
         }
         else{
             throw new NotFoundHttpException("Beer not found");

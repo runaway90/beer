@@ -29,9 +29,27 @@ class BeerRepository extends ServiceEntityRepository
 
         foreach ($findBy as $field => $value) {
             if($field=="pricePerLitre"){
-                $qb->andWhere('b.pricePerLitre BETWEEN :min AND :max')
-                    ->setParameter('min', $value['min'])
-                    ->setParameter('max', $value['max']);
+                if($value['min'] == -1 && $value['max'] !=-1){
+                    $qb->andWhere('b.pricePerLitre <  :max')
+                        ->setParameter('max', $value['max']);
+                }
+                elseif($value['min'] != -1 && $value['max'] ==-1){
+                    $qb->andWhere('b.pricePerLitre >= :min')
+                        ->setParameter('min', $value['min']);
+                }
+                elseif($value['min'] != -1 && $value['max'] !=-1){
+                    $qb->andWhere('b.pricePerLitre BETWEEN :min AND :max')
+                        ->setParameter('min', $value['min'])
+                        ->setParameter('max', $value['max']);
+                }
+
+            }
+            elseif($field=="name"){
+                $compareValue = $value;
+                $compareValue = str_replace('*', '%', $compareValue);
+                $compareValue = str_replace('?', '_', $compareValue);
+                $qb->andWhere(sprintf('b.%s LIKE :%s', $field, $field))
+                    ->setParameter($field, $compareValue);
             }
             else{
                 $qb->andWhere(sprintf('b.%s = :%s', $field, $field))
